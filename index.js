@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const fs = require('fs'); const path = require('path'); // Подключаем Telegraf вместе с middleware session const { Telegraf, Markup, session } = require('telegraf'); const lang = require('./lang');
+const dumpPump = require('./Management/DumpPump/DumpPump');
 
 // Путь к файлу с настройками пользователей const usersFile = path.resolve(__dirname, 'users.json');
 
@@ -9,6 +10,7 @@ function loadUsers() { try { return JSON.parse(fs.readFileSync(usersFile, 'utf8'
 function saveUsers(users) { fs.writeFileSync(usersFile, JSON.stringify(users, null, 2)); }
 
 // Инициализация бота const bot = new Telegraf(process.env.BOT_TOKEN);
+dumpPump.setBot(bot);
 
 // Подключаем сессии bot.use(session());
 
